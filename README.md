@@ -53,9 +53,9 @@ There are 4 columns that we are using are:
 #### Model Parameters
 An HMM is defined by three matrices:
 * Transition Matrix: Probability of moving from state i to j.
-** A_ij = P(next state = j∣current state = i)​
+> A_ij = P(next state = j∣current state = i)​
 * Emission Matrix: Probability of observing k given state i.
-** B_ik = P(observation = k∣state = i)
+> B_ik = P(observation = k∣state = i)
 * Initial State Distribution: Probability of starting in state i.
-** init_i = P(initial state = i)
-** We can set this by finding the likelihood
+> init_i = P(initial state = i)
+ We can set this by finding the likelihood
