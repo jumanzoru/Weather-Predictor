@@ -3,7 +3,7 @@
 ## Project Abstract
 
 ## Introduction
-This project aims to construct an agent that can produce accurate rain or snow prediction in New York based on weather patterns of pervious days. This project proposes a probabilistic approach using **Hidden Markov Models (HMMs)** to infer latent weather states, whether there will be rain/snow or not, from historical observational data: daily average dry bulb temperature(°F) and daily average relative humidity(%). We are also using daily precipitation(inch) and daily snow depth(inch) to classify whether a day counts towards rain/snow or towards no rain/snow. By treating weather evolution as a sequence of hidden variables (rain/snow or no rain/snow) influenced by observable variables (temperature and humidity), the model leverages the HMM’s ability to decode **state transitions** and **emission probabilities** from time-series data. The framework is trained on publicly available climate records: [Climate data - New York State. (2022, July 8). Kaggle.] (https://www.kaggle.com/datasets/die9origephit/temperature-data-albany-new-york), preprocessed into discrete observation sequences. The resulting agent can probabilistically forecast near-term weather conditions, offering a lightweight, data-driven alternative to complex numerical models. This work highlights the potential of HMMs in modeling environmental systems where unobserved states drive observable outcomes, bridging the gap between interpretable stochastic models and real-world forecasting applications.
+This project aims to construct an agent that can produce accurate predictions of whether it will rain tomorrow in New York based on today's temperature and humidity. This project proposes a probabilistic approach using **Hidden Markov Models (HMMs)** to infer latent weather states, whether there will be rain/snow or not, from historical observational data: daily average dry bulb temperature(°F) and daily average relative humidity(%). We are also using daily precipitation(inch) and daily snow depth(inch) to classify whether a day counts towards rain/snow or towards no rain/snow. By treating weather evolution as a sequence of hidden variables (rain/snow or no rain/snow) influenced by observable variables (temperature and humidity), the model leverages the HMM’s ability to decode **state transitions** and **emission probabilities** from time-series data. The framework is trained on publicly available climate records: [Climate data - New York State. (2022, July 8). Kaggle.] (https://www.kaggle.com/datasets/die9origephit/temperature-data-albany-new-york), preprocessed into discrete observation sequences. The resulting agent can probabilistically forecast near-term weather conditions, offering a lightweight, data-driven alternative to complex numerical models. This work highlights the potential of HMMs in modeling environmental systems where unobserved states drive observable outcomes, bridging the gap between interpretable stochastic models and real-world forecasting applications.
 
 ---
 
@@ -39,8 +39,8 @@ There are 4 columns that we are using are:
 ---
 
 ### Binarylize features:
-* Daily average dry bulb temperature: calculate the median for all data points in the training set: 51.0. Any data point with a temperature higher or equal to this threshold will be classified as *high*, others are *low*
-* Daily average relative humidity: calculate the median for all data points in the training set: 66.0. Any data point with a humidity higher or equal to this threshold will be classified as *high*, others are *low*
+* Daily average dry bulb temperature: calculated median for all data points in the training set: 51.0. Any data point with a temperature higher or equal to this threshold will be classified as *high*, others are *low*
+* Daily average relative humidity: calculated median for all data points in the training set: 66.0. Any data point with a humidity higher or equal to this threshold will be classified as *high*, others are *low*
 * Daily Precipitation: any data point that has a precipitation greater than 0 will be classified as *rain/snow*, others are *no rain/snow*
 * Daily Snow Depth: any data point that has a precipitation greater than 0 will be classified as *rain/snow*, others are *no rain/snow*
 
@@ -51,28 +51,44 @@ There are 4 columns that we are using are:
 ## Method
 
 ### Given:
-User enters a sequence of the weather from previous day(s),
-> W = [W_1, W_2, ..., W_n], with W_i ∈ {Rain/Snow, no Rain/Snow}
+Today's temperature and humidity
 
-### Calculate:
-The probability of observing the sequence W_Y
-> W_Y = [W_1, W_2, ..., W_n, Rain/Snow]
+### Return:
+Is it going to rain/snow tomorrow
 
-And the probability of observing the sequence W_N
-> W_N = [W_1, W_2, ..., W_n, no Rain/Snow]
 
-Then compare these two probabilities and return "You will not need an umbrella tommorrw" if W_Y < W_N, or else return "You will need an umbrella tommorrw".
-
-### Note: We are NOT directly using Daily Precipitation and Daily Snow Depth to calculate the probability of a observed sequence. We are treating Rain/Snow or no Rain/Snow as a hidden variable. We believe that the **Forwad-Backward Algorithm** on **Hidden Markov Models** will produce a more accurate result than just finding the likelihood of Rain/Snow or no Rain/Snow from data.
 
 ### But in order to use the Forwad-Backward Algorithm, we need to set up a HMM
-#### Model Parameters
-An HMM is defined by three matrices:
-* Transition Matrix: Probability of moving from state i to j.
-> A_ij = P(next state = j∣current state = i)​
-* Emission Matrix: Probability of observing k given state i.
-> B_ik = P(observation = k∣state = i)
-* Initial State Distribution: Probability of starting in state i.
-> init_i = P(initial state = i)
 
-We can set this by finding the likelihood
+* Hidden States: The weather (rain/snow, no rain/snow).
+
+* Observations: The measured data (temperature, humidity).
+
+#### Model Parameters:
+
+An HMM is defined by three matrices:
+
+1. Transition Matrix A: Probability of moving from state i to j.
+  * A_ij = P(next state = j∣current state = i)​,
+  * There are 2 possible states: [Rain/Snow, no Rain/Snow]
+
+2. Emission Matrix B: Probability of observing k given state i.
+  * B_ik = P(observation = k∣state = i)
+  * There are 4 possible observations: [High temp High humidity, High temp Low humidity, Low temp High Humidity, Low temp, Low Humidity]
+3. Initial State Distribution: Probability of starting in state i.
+  * init_i = P(initial state = i)
+
+
+#### Computations of the three matrices
+Compute the transition matrix A, emission matrix B, and initial distribution π directly from counts.
+
+* A_ij = Number of transitions from state i to j / Total transitions from State i
+
+  * Example: If no Rain/Snow occurs 100 times and transitions to Rain/Snow 20 times:
+  > A_Rain/Snow, no Rain/Snow = 20 /100 = 0.2
+
+* B_ik = Count of observation k in state i / Total observations in state i
+
+* π_i = Frequency of state i = Count of state i / Total number of data
+
+### Note: We are not taking Rain/Snow or not from the user input, we are calculating it. Rain/Snow or not is an hidden variable! We believe that the **Forwad-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
