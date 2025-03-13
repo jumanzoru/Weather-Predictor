@@ -52,10 +52,15 @@ There are 4 columns that we are using are:
 
 ### Given:
 User enters a sequence of the weather from previous day(s),
-> W = [W_1, W_2, ..., W_n]
+> W = [W_1, W_2, ..., W_n], with W_i ∈ {Rain/Snow, no Rain/Snow}
 
 ### Calculate:
-The probability of observing a sequence
+The probability of observing the sequence W_Y
+> W_Y = [W_1, W_2, ..., W_n, Rain/Snow]
+
+And the probability of observing the sequence W_N
+> W_N = [W_1, W_2, ..., W_n, no Rain/Snow]
+
 ### This project uses **Hidden Markov Models** to calculate P(Weather|Sequence of Weather)
 #### Model Parameters
 An HMM is defined by three matrices:
