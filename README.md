@@ -61,6 +61,8 @@ The probability of observing the sequence W_Y
 And the probability of observing the sequence W_N
 > W_N = [W_1, W_2, ..., W_n, no Rain/Snow]
 
+Then compare these two probabilities and return "You will not need an umbrella tommorrw" if W_Y < W_N, or else return "You will need an umbrella tommorrw".
+
 ### This project uses **Hidden Markov Models** to calculate P(Weather|Sequence of Weather)
 #### Model Parameters
 An HMM is defined by three matrices:
