@@ -38,7 +38,7 @@ There are 4 columns that we are using are:
 
 ---
 
-### Binarylize features:
+### Binarilize features:
 * Daily average dry bulb temperature: calculated median for all data points in the training set: 51.0. Any data point with a temperature higher or equal to this threshold will be classified as *high*, others are *low*
 * Daily average relative humidity: calculated median for all data points in the training set: 66.0. Any data point with a humidity higher or equal to this threshold will be classified as *high*, others are *low*
 * Daily Precipitation and Daily Snow Depth: any data point that has a precipitation greater than 0 OR has a precipitation greater than 0 will be classified as *rain/snow*, others are *no rain/snow*
@@ -133,7 +133,7 @@ For future improvements:
 * Adding more data to the training data would also increase the acurracy.
 * In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
 * We should also check the observation that the user inputted. If the observation is very rare, for example having a very extreme temperature that the training data lacks, then refuse to make the prediction and explain to the user.
-* Another way improvement would be not to binarylize the data (and user input) and use Gaussian HMM
+* Another way improvement would be not to binarilize the data (and user input) and use Gaussian HMM
 
 ---
 
