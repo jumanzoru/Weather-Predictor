@@ -48,7 +48,7 @@ There are 4 columns that we are using are:
 
 ---
 
-## Method
+## Objective
 
 ### Given:
 Today's temperature and humidity
@@ -56,7 +56,11 @@ Today's temperature and humidity
 ### Return:
 Is it going to rain/snow tomorrow
 
+---
 
+## Method
+
+![Image](diagram.jpg)
 
 ### But in order to use the Forwad-Backward Algorithm, we need to set up a HMM
 
