@@ -58,4 +58,5 @@ An HMM is defined by three matrices:
 > B_ik = P(observation = k∣state = i)
 * Initial State Distribution: Probability of starting in state i.
 > init_i = P(initial state = i)
- We can set this by finding the likelihood
+
+We can set this by finding the likelihood
