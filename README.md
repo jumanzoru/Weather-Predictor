@@ -58,11 +58,20 @@ Is it going to rain/snow tomorrow
 
 ---
 
+## Assumption: 
+Weather transitions are Markovian (tomorrow’s rain/snow or not depends only on today’s).
+
+---
+
 ## Method
 
-![Image](diagram.jpg)
+**Use Forward Algorithm for calculating today’s state, then use the predicted state of today to predict tomorrow’s state**
 
-### But in order to use the Forwad-Backward Algorithm, we need to set up a HMM
+### Note: We are not taking Rain/Snow or not from the user input, we are predicting it. Rain/Snow or not is an hidden variable! This is because sometimes this piece of information could be missing and we also believe that the **Forward-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
+
+### But in order to use the Forwad Algorithm, we need to set up a HMM
+
+![Image](diagram.jpg)
 
 * Hidden States: The weather (rain/snow, no rain/snow).
 
@@ -73,14 +82,14 @@ Is it going to rain/snow tomorrow
 An HMM is defined by three matrices:
 
 1. Transition Matrix A: Probability of moving from state i to j.
-  * A_ij = P(next state = j∣current state = i)​,
+  * A_ij = P(next state = j∣current state = i)​, (shape: 2 x 2)
   * There are 2 possible states: [Rain/Snow, no Rain/Snow]
 
 2. Emission Matrix B: Probability of observing k given state i.
-  * B_ik = P(observation = k∣state = i)
+  * B_ik = P(observation = k∣state = i), (shape: 2 x 4)
   * There are 4 possible observations: [High temp High humidity, High temp Low humidity, Low temp High Humidity, Low temp, Low Humidity]
 3. Initial State Distribution: Probability of starting in state i.
-  * init_i = P(initial state = i)
+  * init_i = P(initial state = i), (shape: 2)
 
 
 #### Computations of the three matrices
@@ -95,4 +104,12 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 
 * π_i = Frequency of state i = Count of state i / Total number of data
 
-### Note: We are not taking Rain/Snow or not from the user input, we are calculating it. Rain/Snow or not is an hidden variable! We believe that the **Forwad-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
+### Forward Algorithm for Today’s State
+
+Compute the probability of being in state i today given today’s observation:
+* This is the filtered state distribution given today’s observation. Using Bayes’ theorem:
+> P(in state i today | today’s observation) = P(today’s observation | in state i today) * P(in state i today) / P(today’s observation)
+> Let α_observation,i = π_i * B_i,observation
+> 
+
+Improvements: Use sequences of observations (e.g., past 3 days) for more robust state inference.
