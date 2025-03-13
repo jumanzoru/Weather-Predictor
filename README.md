@@ -67,7 +67,8 @@ Weather transitions are Markovian (tomorrow’s rain/snow or not depends only on
 
 **Use Forward Algorithm for calculating today’s state, then use the predicted state of today to predict tomorrow’s state**
 
-### Note: We are not taking Rain/Snow or not from the user input, we are predicting it. Rain/Snow or not is an hidden variable! This is because sometimes this piece of information could be missing and we also believe that the **Forward-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
+### Note: 
+We are not taking Rain/Snow or not from the user input, we are predicting it. Rain/Snow or not is an hidden variable! This is because sometimes this piece of information could be missing and we also believe that the **Forward-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
 
 ### But in order to use the Forwad Algorithm, we need to set up a HMM
 
@@ -126,7 +127,7 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 ---
 
 ## Future Feature Expansions
-For future improvements, the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
+For future improvements, the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs. Adding more data to the training data would also increase the acurracy. In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
 
 ---
 
