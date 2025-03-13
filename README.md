@@ -63,7 +63,9 @@ And the probability of observing the sequence W_N
 
 Then compare these two probabilities and return "You will not need an umbrella tommorrw" if W_Y < W_N, or else return "You will need an umbrella tommorrw".
 
-### This project uses **Hidden Markov Models** to calculate P(Weather|Sequence of Weather)
+### Note: We are NOT directly using Daily Precipitation and Daily Snow Depth to calculate the probability of a observed sequence. We are treating Rain/Snow or no Rain/Snow as a hidden variable. We believe that the **Forwad-Backward Algorithm** on **Hidden Markov Models** will produce a more accurate result than just finding the likelihood of Rain/Snow or no Rain/Snow from data.
+
+### But in order to use the Forwad-Backward Algorithm, we need to set up a HMM
 #### Model Parameters
 An HMM is defined by three matrices:
 * Transition Matrix: Probability of moving from state i to j.
