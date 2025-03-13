@@ -9,10 +9,10 @@ This project aims to construct an agent that can produce accurate predictions of
 
 * **P**erformance measure: accuracy of its predictions of whether it is going to rain or snow or not.
 * **E**nvironment: Only able to see the input statement and the training data.
-* **A**ctuators: the input cell (sequence of whether) and output cell (rain/snow or not tommorrow).
+* **A**ctuators: the input cell (today's observations) and output cell (rain/snow or not tommorrow).
 * **S**ensors: the input cell.
 
-* This is a goal based model, with the only goal to find the probability of rain/snow for the next day given the weather sequence of the previous day(s), and return a output based on that value. This is a model based agent. It trains on the dataset once and will answer only from its training.
+* This is a goal based model, with the only goal to find the probability of rain/snow for the next day given today's observations, and return a output based on that value. This is a model based agent. It trains on the dataset once and will answer only from its training.
 
 ##  Data Exploration and Preprocessing Step
 
