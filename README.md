@@ -45,6 +45,8 @@ There are 4 columns that we are using are:
 * Daily Snow Depth: any data point that has a precipitation greater than 0 will be classified as *rain/snow*, others are *no rain/snow*
 
 * The median calculation step is done in **getting thresholds for binarylization.ipynb**
+* ![image](https://github.com/user-attachments/assets/7f7f4236-7554-4d0c-a6d1-fd7204b4f998)
+
 
 ---
 
