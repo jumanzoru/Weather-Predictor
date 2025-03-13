@@ -128,7 +128,12 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 ---
 
 ## Future Feature Expansions
-For future improvements, the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs. Adding more data to the training data would also increase the acurracy. In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
+For future improvements:
+* the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
+* Adding more data to the training data would also increase the acurracy.
+* In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
+* We should also check the observation that the user inputted. If the observation is very rare, for example having a very extreme temperature that the training data lacks, then refuse to make the prediction and explain to the user.
+* Another way improvement would be not to binarylize the data (and user input) and use Gaussian HMM
 
 ---
 
