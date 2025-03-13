@@ -98,7 +98,7 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 * A_ij = Number of transitions from state i to j / Total transitions from State i
 
   * Example: If no Rain/Snow occurs 100 times and transitions to Rain/Snow 20 times:
-  > A_Rain/Snow, no Rain/Snow = 20 /100 = 0.2
+    > A_Rain/Snow, no Rain/Snow = 20 /100 = 0.2
 
 * B_ik = Count of observation k in state i / Total observations in state i
 
@@ -106,10 +106,47 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 
 ### Forward Algorithm for Today’s State
 
-Compute the probability of being in state i today given today’s observation:
-* This is the filtered state distribution given today’s observation. Using Bayes’ theorem:
-> P(in state i today | today’s observation) = P(today’s observation | in state i today) * P(in state i today) / P(today’s observation)
-> Let α_observation,i = π_i * B_i,observation
-> 
+1. Compute the probability of being in state i today given today’s observation:
+   * This is the filtered state distribution given today’s observation. Using Bayes’ theorem:
+     > P(in state i today | today’s observation) = P(today’s observation | in state i today) * P(in state i today) / P(today’s observation)
+   * Let α_observation,i = B_i,observation * π_i, and P(today’s observation) = sum over j of B_j,observation * π_j
+     > P(in state i today | today’s observation) = α_observation,i / sum over j of α_observation,j
 
-Improvements: Use sequences of observations (e.g., past 3 days) for more robust state inference.
+2. Predict Tomorrow’s State
+   * Use the transition matrix A to compute the probability of transitioning to state j tomorrow:
+     > P(state j tomorrow | today’s observation) = sum over i of P(in state i today | today’s observation) * P(state j tomorrow | state i today)
+   * P(in state i today | today’s observation) are calculated in part 1 and P(state j tomorrow | state i today) is just A_ij
+     > P(state j tomorrow | today’s observation) = sum over i of (α_observation,i / sum over j of α_observation,j) * P(state j tomorrow | state i today)
+
+3. Extract the probability of "rain/snow tomorrow":
+   * P(rain/snow tomorrow | today’s observation)
+   * if < 0.5, then return "most likely no rain or snow tomorrow"
+   * if >= 0.5, then return "most likely will rain or snow tomorrow"
+
+---
+
+## Future Feature Expansions
+For future improvements, the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
+
+---
+
+## Conclusion
+tbd
+
+#### Potential Issues:
+tbd
+
+#### Drawbacks:
+tbd
+
+# Instructions
+**To run the agent, download the WeatherPredictor.ipynb file and the daily_data.csv file in the SAME directory. If you are using google collab, you will need to drag the csv file to the "file" location in google collab and overwrite the file location when reading it.**
+
+---
+
+## Contributors
+* Tom Tang
+* Guan Huang-Chen
+* Xueheng Zhou
+* Jefferson Umanzor-Urrutia
+* [Iron486 (dataset owner)](https://www.kaggle.com/die9origephit)
