@@ -74,7 +74,7 @@ We are not taking Rain/Snow or not from the user input, we are predicting it. Ra
 
 ### But in order to use the Forward Algorithm, we need to set up a HMM
 
-![Image](diagram.jpg)
+![Image](Milestone3Visual.png)
 
 * Hidden States: The weather (rain/snow, no rain/snow).
 
