@@ -9,10 +9,10 @@ This project aims to construct an agent that can produce accurate predictions of
 
 * **P**erformance measure: accuracy of its predictions of whether it is going to rain or snow or not.
 * **E**nvironment: Only able to see the input statement and the training data.
-* **A**ctuators: the input cell (today's observations) and output cell (rain/snow or not tommorrow).
+* **A**ctuators: the input cell (today's observations) and output cell (rain/snow or not tomorrow).
 * **S**ensors: the input cell.
 
-* This is a goal based model, with the only goal to find the probability of rain/snow for the next day given today's observations, and return a output based on that value. This is a model based agent. It trains on the dataset once and will answer only from its training.
+* This is a goal-based model, with the only goal to find the probability of rain/snow for the next day given today's observations, and return an output based on that value. This is a model-based agent. It trains on the dataset once and will answer only from its training.
 
 ##  Data Exploration and Preprocessing Step
 
@@ -20,7 +20,7 @@ This project aims to construct an agent that can produce accurate predictions of
 
 ---
 
-There are 2668 number of observations in this training set, each with 19 features. The datas are from January 1st, 2015 to May 31, 2022, which some days missing but we can ignore that since it is a large dataset. The features are: 
+There are 2668 observations in this training set, each with 19 features. The data are from January 1st, 2015 to May 31, 2022, which has some days missing, but we can ignore that since it is a large dataset. The features are: 
 
 > STATION,DATE,REPORT_TYPE,SOURCE,BackupElements,BackupElevation,BackupEquipment,BackupLatitude,BackupLongitude,BackupName,DailyAverageDewPointTemperature,DailyAverageDryBulbTemperature,DailyAverageRelativeHumidity,DailyAverageSeaLevelPressure,DailyAverageStationPressure,DailyAverageWetBulbTemperature,DailyAverageWindSpeed,DailyCoolingDegreeDays,DailyDepartureFromNormalAverageTemperature,DailyHeatingDegreeDays,DailyMaximumDryBulbTemperature,DailyMinimumDryBulbTemperature,DailyPeakWindDirection,DailyPeakWindSpeed,DailyPrecipitation,DailySnowDepth,DailySnowfall,DailySustainedWindDirection,DailySustainedWindSpeed,Sunrise,Sunset,WindEquipmentChangeDate
 
@@ -31,7 +31,7 @@ The data set is realiable since it was taken directly from a national weather st
 
 ---
 
-There are 4 columns that we are using are: 
+There are 4 columns that we are using: 
 * Daily average dry bulb temperature (°F) (column 12)
 * Daily average relative humidity (%) (column 13)
 * Daily Precipitation (inch) (column 25)
@@ -70,9 +70,9 @@ Weather transitions are Markovian (tomorrow’s rain/snow or not depends only on
 **Use Forward Algorithm for calculating today’s state, then use the predicted state of today to predict tomorrow’s state**
 
 ### Note: 
-We are not taking Rain/Snow or not from the user input, we are predicting it. Rain/Snow or not is an hidden variable! This is because sometimes this piece of information could be missing and we also believe that the **Forward-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
+We are not taking Rain/Snow or not from the user input, we are predicting it. Rain/Snow or not is a hidden variable! This is because sometimes this piece of information could be missing and we also believe that the **Forward-Backward Algorithm** on Hidden Markov Models will produce a more accurate result than just directly returning the likelihood of Rain/Snow or not from data.
 
-### But in order to use the Forwad Algorithm, we need to set up a HMM
+### But in order to use the Forward Algorithm, we need to set up a HMM
 
 ![Image](diagram.jpg)
 
@@ -85,41 +85,41 @@ We are not taking Rain/Snow or not from the user input, we are predicting it. Ra
 An HMM is defined by three matrices:
 
 1. Transition Matrix A: Probability of moving from state i to j.
-  * A_ij = P(next state = j∣current state = i)​, (shape: 2 x 2)
+  * $$\text{A}_\text{ij}$$ = $$P$$(next state = j ∣ current state = i)​, (shape: 2 x 2)
   * There are 2 possible states: [Rain/Snow, no Rain/Snow]
 
 2. Emission Matrix B: Probability of observing k given state i.
-  * B_ik = P(observation = k∣state = i), (shape: 2 x 4)
+  * $$\text{B}_\text{ik}$$ = $$P$$(observation = k ∣ state = i), (shape: 2 x 4)
   * There are 4 possible observations: [High temp High humidity, High temp Low humidity, Low temp High Humidity, Low temp, Low Humidity]
 3. Initial State Distribution: Probability of starting in state i.
-  * init_i = P(initial state = i), (shape: 2)
+  * $$\text{init}_\text{i}$$ = $$P$$(initial state = i), (shape: 2)
 
 
 #### Computations of the three matrices
 Compute the transition matrix A, emission matrix B, and initial distribution π directly from counts.
 
-* A_ij = Number of transitions from state i to j / Total transitions from State i
+* $$\text{B}_\text{ik}$$ = $$\frac{\text{Number of transitions from state i to j}}{\text{Total transitions from State i}}$$
 
   * Example: If no Rain/Snow occurs 100 times and transitions to Rain/Snow 20 times:
-    > A_Rain/Snow, no Rain/Snow = 20 /100 = 0.2
+    > A_Rain/Snow, no Rain/Snow = $$\frac{20}{100}$$ = 0.2
 
-* B_ik = Count of observation k in state i / Total observations in state i
+* $$\text{B}_\text{ik}$$ = $$\frac{\text{Count of observation k in state i}}{\text{Total observations in state i}}$$
 
-* π_i = Frequency of state i = Count of state i / Total number of data
+* $$\pi_\text{i}$$ = Frequency of state i = $$\frac{\text{Count of state i}}{\text{Total number of data}}$$
 
 ### Forward Algorithm for Today’s State
 
 1. Compute the probability of being in state i today given today’s observation:
    * This is the filtered state distribution given today’s observation. Using Bayes’ theorem:
-     > P(in state i today | today’s observation) = P(today’s observation | in state i today) * P(in state i today) / P(today’s observation)
-   * Let α_observation,i = B_i,observation * π_i, and P(today’s observation) = sum over j of B_j,observation * π_j
-     > P(in state i today | today’s observation) = α_observation,i / sum over j of α_observation,j
+     > $$P$$(in state i today | today’s observation) = $$\frac{\text{P(today’s observation | in state i today)} \cdot \text{P(in state i today)}}{\text{P(today’s observation)}}$$
+   * Let $$\alpha_{\text{observation, j}}$$ = $$B_\text{i, observation} \cdot \pi_i$$, and P(today’s observation) = $$\text{sum over j of B}_\text{j, observation} \cdot \pi_j$$
+     > $$P$$(in state i today | today’s observation) = $$\frac{\alpha_{\text{observation, i}}}{\text{sum over j of }\alpha_{\text{observation, j}}}$$
 
 2. Predict Tomorrow’s State
    * Use the transition matrix A to compute the probability of transitioning to state j tomorrow:
-     > P(state j tomorrow | today’s observation) = sum over i of P(in state i today | today’s observation) * P(state j tomorrow | state i today)
-   * P(in state i today | today’s observation) are calculated in part 1 and P(state j tomorrow | state i today) is just A_ij
-     > P(state j tomorrow | today’s observation) = sum over i of (α_observation,i / sum over j of α_observation,j) * P(state j tomorrow | state i today)
+     > P(state j tomorrow | today’s observation) = sum over i of P(in state i today | today’s observation) $$\cdot$$ P(state j tomorrow | state i today)
+   * P(in state i today | today’s observation) are calculated in part 1 and P(state j tomorrow | state i today) is just $$\text{A}_\text{ij}$$
+     > P(state j tomorrow | today’s observation) = sum over i of $$\bigg(\frac{\alpha_\text{observation, i}}{\text{sum over j of } \alpha_\text{observation, j}}\bigg)$$ $$\cdot$$ P(state j tomorrow | state i today)
 
 3. Extract the probability of "rain/snow tomorrow":
    * P(rain/snow tomorrow | today’s observation)
