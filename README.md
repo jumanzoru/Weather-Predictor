@@ -129,7 +129,7 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 ---
 
 ## Conclusion
-The validation set claims that our agent has an accuracy of 53%, which suggests that the model is only marginally better than random guessing, hence not very ideal. While HMMs provide a interpretable framework for sequential data, their performance hinges on careful state definition, robust data preprocessing, and alignment with the Markov assumption. For weather prediction, integrating HMMs with complementary techniques or modern deep learning architectures may yield better results. Here are several factors that could explain the suboptimal performance:
+The validation set claims that our agent has an accuracy of 53%, which suggests that the model is only marginally better than random guessing, hence not very ideal. But this ca be explained. While HMMs provide a interpretable framework for sequential data, their performance hinges on careful state definition, robust data preprocessing, and alignment with the Markov assumption. For weather prediction, integrating HMMs with complementary techniques or modern deep learning architectures may yield better results. Here are several factors that could explain the suboptimal performance:
 
 #### Potential Issues and Drawbacks:
 1. Oversimplified State Definitions
