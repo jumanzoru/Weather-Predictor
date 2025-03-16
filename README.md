@@ -44,7 +44,7 @@ There are 4 columns that we are using:
 * Daily average relative humidity: calculated median for all data points in the training set: 66.0. Any data point with a humidity higher or equal to this threshold will be classified as *high*, others are *low*
 * Daily Precipitation and Daily Snow Depth: any data point that has a precipitation greater than 0 OR has a precipitation greater than 0 will be classified as *rain/snow*, others are *no rain/snow*
 
-* The median calculation step is done in **getting thresholds for binarylization.ipynb**
+* The median calculation step is done in the beginning of the ipynb file.
 * ![image](https://github.com/user-attachments/assets/7f7f4236-7554-4d0c-a6d1-fd7204b4f998)
 
 
