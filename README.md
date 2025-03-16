@@ -128,24 +128,33 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 
 ---
 
+## Conclusion
+The validation set claims that our agent has an accuracy of 53%, which suggests that the model is only marginally better than random guessing, hence not very ideal. While HMMs provide a interpretable framework for sequential data, their performance hinges on careful state definition, robust data preprocessing, and alignment with the Markov assumption. For weather prediction, integrating HMMs with complementary techniques or modern deep learning architectures may yield better results. Here are several factors that could explain the suboptimal performance:
+
+#### Potential Issues and Drawbacks:
+1. Oversimplified State Definitions
+   * Hidden states ("rain/snow", "no rain/snow") might not align well with the observed data (temperature/humidity). For example, the temperature/humidity of a no rain/snow day during winter may overlap with the temperature/humidity of a rain/snow day in summer.
+2. Violation of Markov Assumption
+   * Weather depends on long-term patterns and seasonal trends, but we used HMMs which assume the next state depends ONLY on the current state.
+   * HMMs Struggle with Long-Term Dependencies: They prioritize short-term transitions, making them weak at predicting infrequent or seasonal events.
+3. Suboptimal Hyperparameters
+   * The number of hidden and observerd states might not reflect real-world weather complexity. There are definitely more than 2 features that contribute to rain/snow or not on the next day. We should consider more features and observed states to contribute to the HMM.
+4. Weather is indeed not something that can be very easily predicted. We should have narrowed our data and prediction in some way, such as only analyzing and prediction Summer days.
+   * Emission-Rich, Transition-Poor: If weather changes are abrupt, the transition matrix A may fail to capture rare transitions.
+   * The HMM matrices are a conbination of all the data throughout whole years. As stated earlier, the transition matrix and emission matrix should be very different and unique for certain periods of time, such as for the four seasons. This means that it is very likely that the matrices actually cannot represent any of the seasons at all. We need to narrow our data down more.
+  
+---
+
 ## Future Feature Expansions
 For future improvements:
 * the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
 * Adding more data to the training data would also increase the acurracy.
+* Select more features to contribute to the HMM.
 * In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
 * We should also check the observation that the user inputted. If the observation is very rare, for example having a very extreme temperature that the training data lacks, then refuse to make the prediction and explain to the user.
 * Another way improvement would be not to binarize the data (and user input) and use Gaussian HMM
 
 ---
-
-## Conclusion
-tbd
-
-#### Potential Issues:
-tbd
-
-#### Drawbacks:
-tbd
 
 # Instructions
 **To run the agent, download the WeatherPredictor.ipynb file and the daily_data.csv file in the SAME directory. If you are using google collab, you will need to drag the csv file to the "file" location in google collab and overwrite the file location when reading it.**
