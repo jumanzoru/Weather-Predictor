@@ -12,7 +12,7 @@ This project aims to construct an agent that can produce accurate predictions of
 * **A**ctuators: the input cell (today's observations) and output cell (rain/snow or not tomorrow).
 * **S**ensors: the input cell.
 
-* This is a goal-based model, with the only goal to find the probability of rain/snow for the next day given today's observations, and return an output based on that value. This is a model-based agent. It trains on the dataset once and will answer only from its training.
+* This is a goal-based model, with the only goal of finding the probability of rain/snow for the next day given today's observations, and returning an output based on that value. This is a model-based agent. It trains on the dataset once and will answer only from its training.
 
 ##  Data Exploration and Preprocessing Step
 
@@ -26,8 +26,8 @@ There are 2668 observations in this training set, each with 19 features. The dat
 
 
 But we will not be needing all of them. 
-We only need the 12th, 13th, 25th, and 26th feature of each observation. The fist 2568 observations are going to be the training data of this project and the last 100 be the validation set. 
-The data set is realiable since it was taken directly from a national weather station in Albany, New York.
+We only need the 12th, 13th, 25th, and 26th feature of each observation. The first 2568 observations will be the training data of this project and the last 100 observations will be the validation set. 
+The data set is reliable since it was taken directly from a national weather station in Albany, New York.
 
 ---
 
@@ -129,7 +129,7 @@ Compute the transition matrix A, emission matrix B, and initial distribution π 
 ---
 
 ## Conclusion
-The validation set claims that our agent has an accuracy of 53%, which suggests that the model is only marginally better than random guessing, hence not very ideal. But this ca be explained. While HMMs provide a interpretable framework for sequential data, their performance hinges on careful state definition, robust data preprocessing, and alignment with the Markov assumption. For weather prediction, integrating HMMs with complementary techniques or modern deep learning architectures may yield better results. Here are several factors that could explain the suboptimal performance:
+The validation set claims that our agent has an accuracy of 53%, which suggests that the model is only marginally better than random guessing, hence not very ideal. But this can be explained. While HMMs provide an interpretable framework for sequential data, their performance hinges on careful state definition, robust data preprocessing, and alignment with the Markov assumption. For weather prediction, integrating HMMs with complementary techniques or modern deep learning architectures may yield better results. Here are several factors that could explain the suboptimal performance:
 
 #### Potential Issues and Drawbacks:
 1. Oversimplified State Definitions
@@ -138,26 +138,26 @@ The validation set claims that our agent has an accuracy of 53%, which suggests 
    * Weather depends on long-term patterns and seasonal trends, but we used HMMs which assume the next state depends ONLY on the current state.
    * HMMs Struggle with Long-Term Dependencies: They prioritize short-term transitions, making them weak at predicting infrequent or seasonal events.
 3. Suboptimal Hyperparameters
-   * The number of hidden and observerd states might not reflect real-world weather complexity. There are definitely more than 2 features that contribute to rain/snow or not on the next day. We should consider more features and observed states to contribute to the HMM.
-4. Weather is indeed not something that can be very easily predicted. We should have narrowed our data and prediction in some way, such as only analyzing and prediction Summer days.
+   * The number of hidden and observed states might not reflect real-world weather complexity. There are definitely more than 2 features that contribute to rain/snow or not on the next day. We should consider more features and observed states to contribute to the HMM.
+4. Weather is indeed not something that can be very easily predicted. We should have narrowed our data and prediction in some way, such as only analyzing and predicting Summer days.
    * Emission-Rich, Transition-Poor: If weather changes are abrupt, the transition matrix A may fail to capture rare transitions.
-   * The HMM matrices are a conbination of all the data throughout whole years. As stated earlier, the transition matrix and emission matrix should be very different and unique for certain periods of time, such as for the four seasons. This means that it is very likely that the matrices actually cannot represent any of the seasons at all. We need to narrow our data down more.
+   * The HMM matrices are a combination of all the data throughout whole years. As stated earlier, the transition matrix and emission matrix should be very different and unique for certain periods of time, such as for the four seasons. This means that it is very likely that the matrices actually cannot represent any of the seasons at all. We need to narrow our data down more.
   
 ---
 
 ## Future Feature Expansions
 For future improvements:
-* the agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
-* Adding more data to the training data would also increase the acurracy.
-* Select more features to contribute to the HMM.
-* In addition, Using more recent data would be better. This is because the climate is changing hence behaviors tens of years before are less likely suitable for the behaviors of weather today.
-* We should also check the observation that the user inputted. If the observation is very rare, for example having a very extreme temperature that the training data lacks, then refuse to make the prediction and explain to the user.
-* Another way improvement would be not to binarize the data (and user input) and use Gaussian HMM
+* The agent can allow users to input a whole sequence of observations (e.g., past 3 days) for more robust state inference. A longer sequence would improve the accuracy of a Forward Algorithm on HMMs.
+* Adding more data to the training data would also increase the accuracy. More data enables the model to learn better transition probabilities and emission likelihoods, making it more reliable in predicting future weather states.
+* Selecting more features to contribute to the HMM could improve model performance. We can include additional weather-related features (e.g., wind speed, atmospheric pressure, etc.) that may correlate with the target weather states (rain, snow, sunny). These features would broaden the model’s representation and improve predictions.
+* In addition, using more recent data would be better. This is because the climate is changing, hence behaviors tens of years before are less likely suitable for the behaviors of weather today. Recent data may be more valuable for accurate forecasting.
+* We should also check the observation that the user inputted. If the observation is very rare, for example, having a very extreme temperature that the training data lacks, then refuse to make the prediction and explain to the user. This would prevent the model from making unreliable predictions based on outlier data.
+* Another way to improve would be not to binarize the data (and user input) and use Gaussian HMM. Using Gaussian HMM allows the model to better handle real-world features like temperature and humidity, that are typically represented with continuous numbers. This can improve the model's ability to make accurate predictions.
 
 ---
 
 # Instructions
-**To run the agent, download the WeatherPredictor.ipynb file and the daily_data.csv file in the SAME directory. If you are using google collab, you will need to drag the csv file to the "file" location in google collab and overwrite the file location when reading it.**
+**To run the agent, download the WeatherPredictor.ipynb file and the daily_data.csv file in the SAME directory. If you are using Google Colab, you will need to drag the CSV file to the "file" location in Google Colab and overwrite the file location when reading it.**
 
 ---
 
