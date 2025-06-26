@@ -1,6 +1,10 @@
 # Weather-Predictor
 
-## Project Abstract
+## About This Fork
+
+This project was completed as part of CSE 150A: Introduction to Artificial Intelligence at UC San Diego (Winter 2024). It was developed collaboratively with other students. This fork reflects my personal understanding and contribution to the project, particularly in the areas of probabilistic reasoning, Hidden Markov Model construction, and time-series weather prediction using real-world climate data from Albany, New York.
+
+📁 Original repository: https://github.com/TomTang01/Weather-Predictor
 
 ## Introduction
 This project aims to construct an agent that can produce accurate predictions of whether it will rain tomorrow in New York based on today's temperature and humidity. This project proposes a probabilistic approach using **Hidden Markov Models (HMMs)** to infer latent weather states, whether there will be rain/snow or not, from historical observational data: daily average dry bulb temperature(°F) and daily average relative humidity(%). We are also using daily precipitation(inch) and daily snow depth(inch) to classify whether a day counts towards rain/snow or towards no rain/snow. By treating weather evolution as a sequence of hidden variables (rain/snow or no rain/snow) influenced by observable variables (temperature and humidity), the model leverages the HMM’s ability to decode **state transitions** and **emission probabilities** from time-series data. The framework is trained on publicly available climate records: [Climate data - New York State. (2022, July 8). Kaggle.] (https://www.kaggle.com/datasets/die9origephit/temperature-data-albany-new-york), preprocessed into discrete observation sequences. The resulting agent can probabilistically forecast near-term weather conditions, offering a lightweight, data-driven alternative to complex numerical models. This work highlights the potential of HMMs in modeling environmental systems where unobserved states drive observable outcomes, bridging the gap between interpretable stochastic models and real-world forecasting applications.
@@ -161,9 +165,8 @@ For future improvements:
 
 ---
 
-## Contributors
+## Other Contributors
 * Tom Tang
 * Guan Huang-Chen
 * Xueheng Zhou
-* Jefferson Umanzor-Urrutia
 * [Iron486 (dataset owner)](https://www.kaggle.com/die9origephit)
