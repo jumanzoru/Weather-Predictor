@@ -1,7 +1,5 @@
 # Weather-Predictor
 
-## About This Fork
-
 This project was completed as part of CSE 150A: Introduction to Artificial Intelligence at UC San Diego (Winter 2024). It was developed collaboratively with other students. This fork reflects my personal understanding and contribution to the project, particularly in the areas of probabilistic reasoning, Hidden Markov Model construction, and time-series weather prediction using real-world climate data from Albany, New York.
 
 📁 Original repository: https://github.com/TomTang01/Weather-Predictor
